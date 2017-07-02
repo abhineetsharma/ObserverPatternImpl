@@ -18,6 +18,12 @@ public class Driver {
             tree1.insertOrAddCourse(i, "C");
             tree1.removeSubjectForId(i, "A");
             tree1.removeSubjectForId(i, "B");
+            tree1.insertOrAddCourse(i, "A");
+            tree1.insertOrAddCourse(i, "A");
+            tree1.insertOrAddCourse(i, "B");
+            tree1.insertOrAddCourse(i, "C");
+            tree1.removeSubjectForId(i, "A");
+            tree1.removeSubjectForId(i, "B");
         }
 
         tree1.printNode();
