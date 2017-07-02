@@ -44,13 +44,11 @@ public class TreeBuilder {
         Node result = null;
         if (node == null)
             return null;
-
-        if (node.id == key)
+        else if (node.id == key)
             return node;
-
-        if (node.id > key)
+        else if (node.id > key)
             result = searchRec(node.left, key);
-        if (node.id < key)
+        else if (node.id < key)
             result = searchRec(node.right, key);
 
         return result;
