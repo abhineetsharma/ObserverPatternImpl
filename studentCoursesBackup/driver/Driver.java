@@ -26,7 +26,7 @@ public class Driver {
 
                 String str;
                 while ((str = fileProcessor.readLine()) != null) {
-                    
+
                 }
                 results.writeToStdout();
                 if (null != outputFile)
