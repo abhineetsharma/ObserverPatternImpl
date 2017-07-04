@@ -14,42 +14,45 @@ public class TreeBuilder {
         root = null;
     }
 
-    public void insertOrAddCourse(int key, String courseName) {
-        root = insertRec(root, key, courseName);
+    public void insertNodetoTree(Node node) {
+        root = insertRec(root, node);
     }
 
-    Node insertRec(Node node, int key, String courseName) {
-        if (node == null) {
-            node = new Node(key);
-            node.subjectList = new ArrayList <>();
-            return node;
+    Node insertRec(Node currentNode, Node node) {
+        if (currentNode == null) {
+            currentNode = node;
+
+            return currentNode;
         }
-        if (key == node.id && !node.subjectList.contains(courseName))
-            node.subjectList.add(courseName);
-        else if (key < node.id)
-            node.left = insertRec(node.left, key, courseName);
-        else if (key > node.id)
-            node.right = insertRec(node.right, key, courseName);
-        return node;
+
+        else if (node.id < currentNode.id)
+            currentNode.left = insertRec(currentNode.left, node);
+        else if (node.id > currentNode.id)
+            currentNode.right = insertRec(currentNode.right, node);
+        return currentNode;
     }
 
-    public void removeSubjectForId(int key, String courseName) {
-        Node node = searchRec(root, key);
-        if (null != node && node.subjectList.contains(courseName)) {
-            node.subjectList.remove(new String(courseName));
-        }
+//    public void removeSubjectForId(Node dataNode) {
+//        Node node = searchRec(root, dataNode.id);
+//        if (null != node && node.courseList.contains(dataNode.courseList.get(0))) {
+//            node.courseList.remove(new String(dataNode.courseList.get(0)));
+//        }
+//    }
+
+    public Node searchNode(int id) {
+        return searchRec(root, id);
     }
 
-    Node searchRec(Node node, int key) {
+    Node searchRec(Node node, int id) {
         Node result = null;
         if (node == null)
             return null;
-        else if (node.id == key)
+        else if (node.id == id)
             return node;
-        else if (node.id > key)
-            result = searchRec(node.left, key);
-        else if (node.id < key)
-            result = searchRec(node.right, key);
+        else if (node.id > id)
+            result = searchRec(node.left, id);
+        else if (node.id < id)
+            result = searchRec(node.right, id);
 
         return result;
     }
@@ -61,10 +64,9 @@ public class TreeBuilder {
     void printNodeRec(Node root) {
         if (root != null) {
             printNodeRec(root.left);
-            System.out.println(root.id + " " + root.subjectList + " ");
+            System.out.println(root.id + " " + root.courseList + " ");
             printNodeRec(root.right);
         }
     }
-
 
 }
