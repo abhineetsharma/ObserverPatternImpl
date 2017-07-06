@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.time.LocalDateTime;
 
 public class Logger {
-    private static Logger logger;
     private static File file;
     private static Writer writer;
     private static String logFilePath;
@@ -57,7 +56,7 @@ public class Logger {
         writeToFile(str);
     }
 
-    public static void writeToFile(String str) {
+    private static void writeToFile(String str) {
 
 
         try {

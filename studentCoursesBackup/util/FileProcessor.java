@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class FileProcessor {
 
-    private String inputPath;
+    private final String inputPath;
     private File file;
     private BufferedReader br;
 

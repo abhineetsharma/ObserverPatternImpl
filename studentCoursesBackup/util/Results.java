@@ -14,7 +14,9 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
     private String outputPath;
 
     public Results(String path) {
-        this.outputPath = path;
+        outputPath = null;
+        if(null !=path && path.trim().length() >0)
+            outputPath = path;
     }
 
     public void storeNewResult(Object obj) {
@@ -25,7 +27,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
     }
 
     private String getStoredString() {
-        return stringBuilderStorage.toString().toString();
+        return stringBuilderStorage.toString();
     }
 
     @Override

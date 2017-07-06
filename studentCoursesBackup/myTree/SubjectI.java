@@ -1,12 +1,11 @@
 package studentCoursesBackup.myTree;
 
-import studentCoursesBackup.util.TreeBuilder;
 
 /**
- * Created by abhineetsharma on 6/29/17.
+ * Subject Interface
  */
-public interface SubjectI {
+interface SubjectI {
     void registerObserver(ObserverI observer);
     void removeObserver(ObserverI observer);
-    void notifyObserver();
+    void notifyAllObservers(String courseName);
 }
