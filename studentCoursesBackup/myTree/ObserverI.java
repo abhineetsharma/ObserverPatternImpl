@@ -4,5 +4,5 @@ package studentCoursesBackup.myTree;
  * Interface ObserverI
  */
 public interface ObserverI {
-    void update(String courseName);
+    void update(String operation,String courseName);
 }

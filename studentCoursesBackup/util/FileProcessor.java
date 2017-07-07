@@ -47,8 +47,6 @@ public class FileProcessor {
         }
     }
 
-
-
     //get the one at a time from the input file
     public String readLine() {
         if (file.exists() && !file.isDirectory()) {

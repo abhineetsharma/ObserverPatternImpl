@@ -5,7 +5,8 @@ package studentCoursesBackup.myTree;
  * Subject Interface
  */
 interface SubjectI {
+
     void registerObserver(ObserverI observer);
     void removeObserver(ObserverI observer);
-    void notifyAllObservers(String courseName);
+    void notifyAllObservers(String opration,String courseName);
 }

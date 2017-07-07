@@ -22,6 +22,10 @@ public class Driver {
         }
     }
 
+    /**
+     * Process the input String
+     * Return a Student Info object
+     */
     private StudentInfo processString(String str) {
         StudentInfo studentInfo = null;
         try {
@@ -43,6 +47,9 @@ public class Driver {
 
         Results results = new Results("");
         results.storeNewResult("Process started..");
+        results.addTextSeprator();
+
+        results.storeNewResult("Insert Operation\n");
         try {
             if (null != args && args.length > 0) {
                 String inputFile = args[0];
@@ -50,6 +57,7 @@ public class Driver {
                 FileProcessor inputFileProcessor = new FileProcessor(inputFile);
 
                 TreeBuilder tree1 = new TreeBuilder();
+
                 TreeBuilder backupTree2 = new TreeBuilder();
                 TreeBuilder backupTree3 = new TreeBuilder();
                 String str;
@@ -58,47 +66,17 @@ public class Driver {
 
                 //insert into the tree
                 while ((str = inputFileProcessor.readLine()) != null) {
-
                     StudentInfo st = driver.processString(str);
                     if (null == st)
                         continue;
                     int id = st.id;
                     String courseName = st.courseName;
-
-                    Node node;
-                    if ((node = tree1.searchNode(id)) != null) {
-                        node.addCourse(courseName);
-                        for (ObserverI n : node.getObserverList()) {
-                            Node nd = (Node) n;
-                            nd.addCourse(courseName);
-                        }
-
-                    } else {
-                        node = new Node(id, courseName);
-                        tree1.insertNodeIntoTree(node);
-
-                        ObserverI nodeBackUp1 = node.clone();
-                        if (null != nodeBackUp1) {
-                            backupTree2.insertNodeIntoTree((Node) nodeBackUp1);
-                            node.registerObserver(nodeBackUp1);
-                        }
-                        else{
-                            Logger.log("nodeBackUp1 is null");
-                        }
-
-                        ObserverI nodeBackUp2 = node.clone();
-                        if (null != nodeBackUp2) {
-                            backupTree3.insertNodeIntoTree((Node) nodeBackUp2);
-                            node.registerObserver(nodeBackUp2);
-                        }
-                        else{
-                            Logger.log("nodeBackUp2 is null");
-                        }
-                    }
-
-
+                    String msg = String.format("For ID: %d Course name added : %s",id,courseName);
+                    String rst = tree1.insertNode(id,courseName,backupTree2,backupTree3);
+                    results.storeNewResult( msg+" "+rst);
                 }
-
+                results.addTextSeprator();
+                results.storeNewResult("Delete Operation\n");
                 if (args.length > 1) {
                     String deleteFile = args[1];
                     Logger.log(String.format("delete File: %s", deleteFile));
@@ -107,17 +85,12 @@ public class Driver {
                     //delete course from a tree
                     while ((str = deleteFileProcessor.readLine()) != null) {
                         StudentInfo studentInfo = driver.processString(str);
-
                         if (null == studentInfo) continue;
-
                         int id = studentInfo.id;
                         String courseName = studentInfo.courseName;
-
-                        Node node;
-                        if ((node = tree1.searchNode(id)) != null) {
-                            node.removeCourse(courseName);
-                            node.notifyAllObservers(courseName);
-                        }
+                        String st  =tree1.removeCourseFromNode(id,courseName);
+                        String msg = String.format("For ID: %d Course name deleted : %s Course Enrolled: %s",id,courseName, st);
+                        results.storeNewResult(msg);
                     }
                 } else {
                     Logger.log("Delete file needed for execution");
@@ -126,6 +99,8 @@ public class Driver {
                     Logger.stopLogging();
                     System.exit(1);
                 }
+
+                results.addTextSeprator();
 
                 //Result
                 Results results1 = null, results2 = null, results3 = null;
@@ -165,9 +140,11 @@ public class Driver {
                     Logger.stopLogging();
                     System.exit(1);
                 }
-
+                results.storeNewResult("Done, 3 output file generated");
+                results.writeToStdout();
                 if (null != results1) {
                     tree1.printNode(results1);
+                    results1.writeToStdout();
                     results1.writeToFile();
                 }
                 if (null != results2) {
@@ -178,7 +155,7 @@ public class Driver {
                     backupTree3.printNode(results3);
                     results3.writeToFile();
                 }
-                results.storeNewResult("Done, 3 output file generated");
+
 
             } else {
                 results.storeNewResult("Error: No arguments pass, Input file needed for execution");
@@ -188,7 +165,6 @@ public class Driver {
             }
         } finally {
             Logger.stopLogging();
-            results.writeToStdout();
         }
     }
 }

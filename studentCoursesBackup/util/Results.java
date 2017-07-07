@@ -10,20 +10,31 @@ import java.io.OutputStreamWriter;
 
 public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 
-    private StringBuilder stringBuilderStorage = new StringBuilder();
-    private String outputPath;
-
     public Results(String path) {
         outputPath = null;
         if(null !=path && path.trim().length() >0)
             outputPath = path;
     }
 
+    private StringBuilder stringBuilderStorage = new StringBuilder();
+
+    private String outputPath;
+
     public void storeNewResult(Object obj) {
         String str = obj.toString();
         Logger.log(str);
         str = String.format("%s%s", str, "\n");
+        //System.out.println(str);
         stringBuilderStorage.append(str);
+    }
+
+    public void addTextSeprator(){
+        StringBuilder sbr = new StringBuilder("\n");
+        for(int i =0;i<72;i++){
+            sbr.append("-");
+        }
+        sbr.append("\n");
+        storeNewResult(sbr);
     }
 
     private String getStoredString() {
@@ -52,7 +63,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
             }
             else{
                 String msg = "No output file found, file either is null or a blank string";
-                storeNewResult(msg);
+                //storeNewResult(msg);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
