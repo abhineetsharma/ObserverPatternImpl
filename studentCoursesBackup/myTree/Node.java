@@ -32,16 +32,16 @@ public class Node implements ObserverI, SubjectI, Cloneable {
         if (null == getCourseList()) {
             courseList = new ArrayList <>();
         }
-        if (!getCourseList().contains(courseName))
-            getCourseList().add(courseName);
+        if (!courseList.contains(courseName))
+            courseList.add(courseName);
     }
 
     /**
      * remove course from current object node if the course is present
      */
     public void removeCourse(String courseName) {
-        if (null != getCourseList() && getCourseList().contains(courseName))
-            getCourseList().remove(courseName);
+        if (null != courseList && courseList.contains(courseName))
+            courseList.remove(courseName);
     }
 
     /**
@@ -138,18 +138,30 @@ public class Node implements ObserverI, SubjectI, Cloneable {
         return courseList;
     }
 
+    /**
+     * Get current node left
+     */
     public Node getLeft() {
         return left;
     }
 
+    /**
+     * Set current node left
+     */
     public void setLeft(Node left) {
         this.left = left;
     }
 
+    /**
+     * Get current node right
+     */
     public Node getRight() {
         return right;
     }
 
+    /**
+     * Set current node right
+     */
     public void setRight(Node right) {
         this.right = right;
     }

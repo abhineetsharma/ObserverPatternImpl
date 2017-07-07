@@ -9,14 +9,23 @@ import studentCoursesBackup.myTree.ObserverI;
 public class TreeBuilder {
     private Node root;
 
+    /**
+     * TreeBuilder constructor
+     */
     public TreeBuilder() {
         root = null;
     }
 
+    /**
+     * Calls the recursive part og insertNode with root node
+     */
     private void insertNodeIntoTree(Node node) {
         root = insertRecord(root, node);
     }
 
+    /**
+     * Recursively find the node and set the reference to the new node
+     */
     private Node insertRecord(Node currentNode, Node node) {
         if (currentNode == null) {
             currentNode = node;
@@ -29,6 +38,9 @@ public class TreeBuilder {
         return currentNode;
     }
 
+    /**
+     * Recursive search for a given a id
+     */
     private Node searchRec(Node node, int id) {
         Node result = null;
         if (node == null)
@@ -43,6 +55,9 @@ public class TreeBuilder {
         return result;
     }
 
+    /**
+     * Recursive part of Print BST tree in in-order
+     */
     private void printNodeRec(Results results,Node node) {
         if (node != null) {
             printNodeRec(results,node.getLeft());
@@ -56,14 +71,25 @@ public class TreeBuilder {
         }
     }
 
+    /**
+     * Search the node with a given id
+     */
     public Node searchNode(int id) {
         return searchRec(root, id);
     }
 
+    /**
+     * Print BST tree in in-order
+     */
     public void printNode(Results results) {
         printNodeRec(results,root);
     }
 
+    /**
+     * Insert node into the tree
+     * After creating a new node if node is not present in the tree and
+     * clone it two times as backup nodes and dave it as a observer of the main node
+     */
     public String insertNode(int id,String courseName,TreeBuilder backupTree2, TreeBuilder backupTree3){
         Node node;
         if ((node = searchNode(id)) != null) {
@@ -95,6 +121,9 @@ public class TreeBuilder {
         return String.format("Courses Enrolled : %s",node.getCourseList());
     }
 
+    /**
+     * Remove a course from the node
+     */
     public String removeCourseFromNode(int id,String courseName){
         Node node;
 
